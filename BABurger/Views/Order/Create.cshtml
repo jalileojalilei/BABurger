@@ -1,0 +1,64 @@
+﻿@model BABurger.Models.OrdersViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="SelectedMenuId" asp-items="@Model.MenuItems" required data-val="true" data-val-required="Please select your menu!">
+                    <option value="">-- Select a menu --</option>
+                </select>
+                <span asp-validation-for="SelectedMenuId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-5 mb-2">
+                <select asp-for="SelectedSize" asp-items="@Model.SizeItems" required data-val="true" data-val-required="Please select a size">
+                    <option value="">-- Select a size --</option>
+                </select>
+                <span asp-validation-for="SelectedSize" class="text-danger"></span>
+            </div>
+            @foreach (var topping in Model.Toppings)
+            {
+                <div class="form-group">
+                    <label class="control-label">@topping.Name</label>
+                    <input type="number" name="number" min="1" max="10" class="form-control" />
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="Order.Number" class="control-label"> Number of Menus</label>
+                <input asp-for="Order.Number" class="form-control" />
+                <span asp-validation-for="Order.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.Price" class="control-label"></label>
+                <input asp-for="Order.Price" class="form-control" />
+                <span asp-validation-for="Order.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.OrderTime" class="control-label"></label>
+                <input asp-for="Order.OrderTime" class="form-control" />
+                <span asp-validation-for="Order.OrderTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
